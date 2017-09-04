@@ -1,30 +1,11 @@
-def repoContextUrl = hasProperty("artifactory_context_url") ? artifactory_context_url : System.getenv('artifactory_context_url')
-def repoUsername = hasProperty("artifactory_username") ? artifactory_username : System.getenv('artifactory_username')
-def repoPassword = hasProperty("artifactory_password") ? artifactory_password : System.getenv('artifactory_password')
-def repoPath = "plugins-release-local"
-
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.4.7"
-    }
-}
-
 apply plugin: 'java'
-apply plugin: "maven"
-apply plugin: "idea"
 apply plugin: 'groovy'
-apply plugin: "maven-publish"
-apply plugin: 'com.jfrog.artifactory'
 
-group = "me.systembug.gradle"
+group = "com.riantono.libs"
 version = "2.0.0"
 
-
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.14.1'
+    gradleVersion = '2.8'
 }
 
 sourceCompatibility = 1.7
@@ -40,33 +21,8 @@ dependencies {
     compile 'com.android.tools.build:gradle:0.14.0'
 
     testCompile 'org.easytesting:fest-assert:1.4'
-    testCompile 'org.testng:testng:6.8'
 }
 
 test {
     useTestNG()
-}
-
-artifactory {
-    contextUrl = repoContextUrl
-    publish {
-        repository {
-            repoKey = repoPath
-            username = repoUsername
-            password = repoPassword
-            maven = true
-        }
-        defaults {
-            publications('mavenJava')
-        }
-    }
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            artifactId "advanced-build-version"
-            from components.java
-        }
-    }
 }
