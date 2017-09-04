@@ -46,7 +46,7 @@ class AdvancedBuildVersionPlugin implements Plugin<Project> {
         }
     }
 
-    private static final String[] SUPPORTED_ANDROID_VERSIONS = ['3.'];
+    private static final String[] SUPPORTED_ANDROID_VERSIONS = ['1.','2.','3.'];
 
     def static boolean checkAndroidVersion(String version) {
         for (String supportedVersion : SUPPORTED_ANDROID_VERSIONS) {
